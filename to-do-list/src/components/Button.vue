@@ -1,11 +1,11 @@
 <template>
-    <button class="btn" v-bind:class="{primary: primary}">{{ name }}</button>
+    <button class="btn" v-bind:class="{primary: primary, warning: warning, success: success, danger: danger}">{{ name }}</button>
 </template>
 
 <script>
 export default {
     name: "buttonAction",
-    props:["name", "primary"],
+    props:["name", "primary", "danger", "warning", "success"],
     data(){
         return{
            
@@ -33,7 +33,7 @@ export default {
     .danger{
         background-color: #f56c6c;
     }
-    .Warning{
+    .warning{
         background-color: #e6a23c;
     }
 </style>
