@@ -1,69 +1,65 @@
 <template>
   <div class="container">
-    <Card>
-      <template #content>
-          <ul class="list-item">
-            <li class="item">Ngày {{ day }} tháng {{ month }} năm {{ year }}</li>
-            <li class="item teacher-name">Giảng viên:{{ teacherName }}</li>
-            <li class="item">{{ state }} {{ hour }}:{{ minute }}</li>
-          </ul>
-      </template>
-     
-      <template #button>
-        <Button :name="titleButton" primary="true"></Button>
-      </template>
-    </Card>
+    <div class="block_handle">
+      <input type="text" v-model="getData" class="inputField" :class="{'isBlur': isBlur}"  @click="handleClick()" @blur="handleBlur()">
+      <button-to-do name="Submit" success v-on:click="addData(data)" class="btn-submit" ></button-to-do>
+    </div>
+    <my-list :data="data"></my-list>
   </div>
 </template>
 
-<script>
+<script setup>
+import ButtonToDo from './components/MyButton.vue';
+import MyList from './components/MyList.vue';
+import { ref } from 'vue';
 
-import Card from './components/Card.vue';
-import Button from './components/Button.vue';
+const data = ref(['truong', 'van', 'bao']);
+const getData = ref("");
+var isBlur = ref(false);
+const handleBlur = ()=>{
+  isBlur.value = !isBlur.value;
 
-
-export default {
-  name: 'App',
-  data(){
-    return{
-      day: "14",
-      month: "03",
-      year: "2024",
-      hour: "06",
-      minute: "00",
-      state: "Sáng",
-      teacherName: "Nguyen Van A",
-      titleButton: "THAM GIA BUOI HOC"
-    }
-  },
-  components: {
-   Card, Button,
+}
+const handleClick = ()=>{
+  isBlur.value = !isBlur.value;
+}
+const addData = ()=>{
+  if(getData.value.trim().length !== 0){
+    data.value.push(getData.value);
+    getData.value = "";
   }
 }
+
+
 </script>
 
 <style>
-.list-item{
-    list-style: none;
-    padding: 0;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-.item{
-    margin-bottom: 10px;
+.container{
+  margin:200px auto;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67, 0.1), 0px 2px 6px 2px rgba(60,64, 67, 0.2);
+  width: 30%;
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: start;
 }
-.teacher-name{
-    color: red;
+.block_handle{
+  text-align: center;
 }
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .container{
-    margin:200px auto;
-
-  }
-  .heading_1{
-    color: #ff0000;
-    font-size: 30px;
-  }
+.btn-submit{
+  margin-left: 20px;
+}
+.inputField{
+  height: 30px;
+  border: 1px solid #333;
+  outline: none;
+  box-sizing: border-box;
+}
+.isBlur{
+  border: 2px solid #67c23a;
+}
 </style>
